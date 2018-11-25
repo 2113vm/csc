@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/vitaliy/CLionProjects/csc/Huffman_code_1/main.cpp
+utility
+-
+iostream
+-
+string
+-
+map
+-
+algorithm
+-
+vector
+-
+queue
+-
+
