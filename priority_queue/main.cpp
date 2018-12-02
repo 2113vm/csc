@@ -12,8 +12,8 @@ public:
 private:
     vector<int> queue;
     void siftUp(int index);
-    void siftDown(int index);
-    int findMax(int ind1, int ind2);
+    void siftDown(unsigned int index);
+    unsigned int findMax(unsigned int ind1, unsigned int ind2);
 };
 
 PriorityQueue::PriorityQueue(unsigned int number) {
@@ -22,7 +22,7 @@ PriorityQueue::PriorityQueue(unsigned int number) {
 
 void PriorityQueue::insert(int num) {
     queue.push_back(num);
-    int index = static_cast<unsigned int>(queue.size() - 1);
+    int index = static_cast<unsigned int>(queue.size());
     siftUp(index);
 }
 
@@ -30,43 +30,40 @@ int PriorityQueue::extractMax() {
     int max = queue[0];
     queue[0] = queue[queue.size() - 1];
     queue.pop_back();
-    siftDown(0);
+    siftDown(1);
     return max;
 }
 
-void PriorityQueue::siftDown(int index) {
+void PriorityQueue::siftDown(unsigned int index) {
     unsigned int max_index, ch1, ch2;
-    max_index = static_cast<unsigned int>(queue.size() - 1);
-    if (index == 0) {
-        ch1 = 1;
-        ch2 = 2;
-    } else {
-        ch1 = index * 2;
-        ch2 = index * 2 + 1;
-    }
+    max_index = static_cast<unsigned int>(queue.size());
+
+    ch1 = index * 2;
+    ch2 = index * 2 + 1;
+
     if (max_index < ch1) {
         return;
     }
     if (max_index >= ch2) {
-        int max_ch = findMax(ch1, ch2);
-        if (queue[index] >= queue[max_ch]) {
+        unsigned int max_ch = findMax(ch1, ch2);
+        if (queue[index - 1] >= queue[max_ch - 1]) {
             return;
         } else {
             int helper;
-            helper = queue[index];
-            queue[index] = queue[max_ch];
-            queue[max_ch] = helper;
+            helper = queue[index - 1];
+            queue[index - 1] = queue[max_ch - 1];
+            queue[max_ch - 1] = helper;
             siftDown(max_ch);
         }
     }
     if (max_index == ch1) {
-        if (queue[index] >= queue[ch1]) {
+        if (queue[index - 1] >= queue[ch1 - 1]) {
             return;
         } else {
             int helper;
-            helper = queue[index];
-            queue[index] = queue[ch1];
-            queue[ch2] = helper;
+            helper = queue[index - 1];
+            queue[index - 1] = queue[ch1 - 1];
+            queue[ch2 - 1] = helper;
             return;
         }
 
@@ -75,18 +72,21 @@ void PriorityQueue::siftDown(int index) {
 
 void PriorityQueue::siftUp(int index) {
     int parent_index = index / 2;
-    if (queue[parent_index] < queue[index]) {
+    if (parent_index == 0) {
+        return;
+    }
+    if (queue[parent_index - 1] < queue[index - 1]) {
         int helper;
-        helper = queue[parent_index];
-        queue[parent_index] = queue[index];
-        queue[index] = helper;
+        helper = queue[parent_index - 1];
+        queue[parent_index - 1] = queue[index - 1];
+        queue[index - 1] = helper;
         siftUp(parent_index);
     }
 }
 
-int PriorityQueue::findMax(int ind1, int ind2) {
+unsigned int PriorityQueue::findMax(unsigned int ind1, unsigned int ind2) {
 
-    if (queue[ind1] < queue[ind2]) {
+    if (queue[ind1 - 1] < queue[ind2 - 1]) {
         return ind2;
     } else {
         return ind1;
