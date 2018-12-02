@@ -63,7 +63,7 @@ void PriorityQueue::siftDown(unsigned int index) {
             int helper;
             helper = queue[index - 1];
             queue[index - 1] = queue[ch1 - 1];
-            queue[ch2 - 1] = helper;
+            queue[ch1 - 1] = helper;
             return;
         }
 
