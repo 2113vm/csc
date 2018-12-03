@@ -29,14 +29,14 @@ int get_pos(const std::vector<int> &numbers, int number) {
 
 int main() {
     std::ios_base::sync_with_stdio(false);
-    int number_count;
+    size_t number_count;
     std::cin >> number_count;
     std::vector<int> numbers(number_count);
-    for (int i = 0; i < number_count; ++i) {
-        std::cin >> numbers[i];
+    for (auto &number:numbers) {
+        std::cin >> number;
     }
 
-    int query_count;
+    size_t query_count;
     std::cin >> query_count;
     while (query_count-- > 0) {
         int number;
