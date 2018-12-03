@@ -4,24 +4,39 @@
 #include <vector>
 
 int get_pos(const std::vector<int> &numbers, int number) {
-    // TODO optimize this function
-    auto it = std::find(numbers.begin(), numbers.end(), number);
-    if (it == numbers.end()) {
+
+    int l=0, r=numbers.size() - 1;
+
+
+    if ((number > numbers[r]) or (number < numbers[0])) {
         return -1;
     }
-    return static_cast<int>(it - numbers.begin()) + 1;
+
+    while (l <= r) {
+        int m = l + (r - l) / 2;
+        if (numbers[m] == number) {
+            return m + 1;
+        }
+        if (numbers[m] > number) {
+            r = m - 1;
+        }
+        if (numbers[m] < number) {
+            l = m + 1;
+        }
+    }
+    return -1;
 }
 
-int main(void) {
-    size_t number_count;
+int main() {
+    std::ios_base::sync_with_stdio(false);
+    int number_count;
     std::cin >> number_count;
     std::vector<int> numbers(number_count);
-    for (auto &number:numbers) {
-        std::cin >> number;
+    for (int i = 0; i < number_count; ++i) {
+        std::cin >> numbers[i];
     }
-    assert(std::is_sorted(numbers.begin(), numbers.end()));
 
-    size_t query_count;
+    int query_count;
     std::cin >> query_count;
     while (query_count-- > 0) {
         int number;
